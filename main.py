@@ -1,7 +1,7 @@
 import os
 import requests
 from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+from telegram.ext import Application, CommandHandler, ContextTypes
 
 TOKEN = os.environ.get("TOKEN")
 
@@ -15,7 +15,8 @@ async def cat(update: Update, context: ContextTypes.DEFAULT_TYPE):
     cat_url = data[0]["url"]
     await update.message.reply_photo(cat_url)
 
-app = ApplicationBuilder().token(TOKEN).build()
-app.add_handler(CommandHandler("start", start))
-app.add_handler(CommandHandler("cat", cat))
-app.run_polling()
+if __name__ == "__main__":
+    app = Application.builder().token(TOKEN).build()
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("cat", cat))
+    app.run_polling()
